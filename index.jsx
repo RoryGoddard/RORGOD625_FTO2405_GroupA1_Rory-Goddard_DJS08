@@ -1,3 +1,6 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 import Home from "./pages/Home"
 import About from "./pages/About"
 import Vans from "./pages/Vans/Vans"
@@ -15,13 +18,22 @@ import NotFound from "./pages/NotFound"
 import Layout from "./components/Layout"
 import HostLayout from "./components/HostLayout"
 import AuthRequired from "./components/AuthRequired"
-import { Route, Routes } from "react-router-dom"
+
+import "./server"
 
 function App() {
+  /**
+   * Challenge: Create the AuthRequired Layout Route to protect
+   * all the /host routes.
+   * 
+   * For now, just use `const authenticated = false`
+   * to determine the authenticated status of the user, and
+   * either send them to the /login route, or render the Outlet
+   */
 
   return (
-    <>
-       <Routes>
+    <BrowserRouter>
+      <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
@@ -49,9 +61,10 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </>
-
+    </BrowserRouter>
   )
 }
 
-export default App
+ReactDOM
+  .createRoot(document.getElementById('root'))
+  .render(<App />);
